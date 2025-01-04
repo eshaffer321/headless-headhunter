@@ -1,100 +1,141 @@
-import { Avatar } from '@/components/avatar'
-import {
-  Dropdown,
-  DropdownButton,
-  DropdownDivider,
-  DropdownItem,
-  DropdownLabel,
-  DropdownMenu,
-} from '@/components/dropdown'
-import { Navbar, NavbarDivider, NavbarItem, NavbarLabel, NavbarSection, NavbarSpacer } from '@/components/navbar'
-import {
-  ArrowRightStartOnRectangleIcon,
-  ChevronDownIcon,
-  Cog8ToothIcon,
-  LightBulbIcon,
-  PlusIcon,
-  ShieldCheckIcon,
-  UserIcon,
-} from '@heroicons/react/16/solid'
-import { InboxIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+'use client'
 
-function Example() {
+import { useState } from 'react'
+import { Dialog, DialogPanel } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image';
+import Footer from '@/components/footer';
+
+
+const navigation = [
+  { name: 'Product', href: '#' },
+  { name: 'Features', href: '#' },
+  { name: 'Marketplace', href: '#' },
+  { name: 'Company', href: '#' },
+]
+
+export default function Example() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   return (
-    <Navbar>
-      <Dropdown>
-        <DropdownButton as={NavbarItem}>
-          <Avatar src="/tailwind-logo.svg" />
-          <NavbarLabel>Tailwind Labs</NavbarLabel>
-          <ChevronDownIcon />
-        </DropdownButton>
-        <DropdownMenu className="min-w-64" anchor="bottom start">
-          <DropdownItem href="/teams/1/settings">
-            <Cog8ToothIcon />
-            <DropdownLabel>Settings</DropdownLabel>
-          </DropdownItem>
-          <DropdownDivider />
-          <DropdownItem href="/teams/1">
-            <Avatar slot="icon" src="/tailwind-logo.svg" />
-            <DropdownLabel>Tailwind Labs</DropdownLabel>
-          </DropdownItem>
-          <DropdownItem href="/teams/2">
-            <Avatar slot="icon" initials="WC" className="bg-purple-500 text-white" />
-            <DropdownLabel>Workcation</DropdownLabel>
-          </DropdownItem>
-          <DropdownDivider />
-          <DropdownItem href="/teams/create">
-            <PlusIcon />
-            <DropdownLabel>New team&hellip;</DropdownLabel>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-      <NavbarDivider className="max-lg:hidden" />
-      <NavbarSection className="max-lg:hidden">
-        <NavbarItem href="/" current>
-          Home
-        </NavbarItem>
-        <NavbarItem href="/events">Events</NavbarItem>
-        <NavbarItem href="/orders">Orders</NavbarItem>
-      </NavbarSection>
-      <NavbarSpacer />
-      <NavbarSection>
-        <NavbarItem href="/search" aria-label="Search">
-          <MagnifyingGlassIcon />
-        </NavbarItem>
-        <NavbarItem href="/inbox" aria-label="Inbox">
-          <InboxIcon />
-        </NavbarItem>
-        <Dropdown>
-          <DropdownButton as={NavbarItem}>
-            <Avatar src="/profile-photo.jpg" square />
-          </DropdownButton>
-          <DropdownMenu className="min-w-64" anchor="bottom end">
-            <DropdownItem href="/my-profile">
-              <UserIcon />
-              <DropdownLabel>My profile</DropdownLabel>
-            </DropdownItem>
-            <DropdownItem href="/settings">
-              <Cog8ToothIcon />
-              <DropdownLabel>Settings</DropdownLabel>
-            </DropdownItem>
-            <DropdownDivider />
-            <DropdownItem href="/privacy-policy">
-              <ShieldCheckIcon />
-              <DropdownLabel>Privacy policy</DropdownLabel>
-            </DropdownItem>
-            <DropdownItem href="/share-feedback">
-              <LightBulbIcon />
-              <DropdownLabel>Share feedback</DropdownLabel>
-            </DropdownItem>
-            <DropdownDivider />
-            <DropdownItem href="/logout">
-              <ArrowRightStartOnRectangleIcon />
-              <DropdownLabel>Sign out</DropdownLabel>
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </NavbarSection>
-    </Navbar>
+    <div className="bg-white">
+      <header className="absolute inset-x-0 top-0 z-50">
+        <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
+          <div className="flex lg:flex-1">
+            <a href="#" className="-m-1.5 p-1.5">
+              <span className="sr-only">Your Company</span>
+              <img
+                alt=""
+                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                className="h-8 w-auto"
+              />
+            </a>
+          </div>
+          <div className="flex lg:hidden">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            >
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon aria-hidden="true" className="size-6" />
+            </button>
+          </div>
+          <div className="hidden lg:flex lg:gap-x-12">
+            {navigation.map((item) => (
+              <a key={item.name} href={item.href} className="text-sm/6 font-semibold text-gray-900">
+                {item.name}
+              </a>
+            ))}
+          </div>
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="#" className="text-sm/6 font-semibold text-gray-900">
+              Log in <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </nav>
+        <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+          <div className="fixed inset-0 z-50" />
+          <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div className="flex items-center justify-between">
+              <a href="#" className="-m-1.5 p-1.5">
+                <span className="sr-only">Your Company</span>
+                <img
+                  alt=""
+                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
+                  className="h-8 w-auto"
+                />
+              </a>
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              >
+                <span className="sr-only">Close menu</span>
+                <XMarkIcon aria-hidden="true" className="size-6" />
+              </button>
+            </div>
+            <div className="mt-6 flow-root">
+              <div className="-my-6 divide-y divide-gray-500/10">
+                <div className="space-y-2 py-6">
+                  {navigation.map((item) => (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+                <div className="py-6">
+                  <a
+                    href="#"
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  >
+                    Log in
+                  </a>
+                </div>
+              </div>
+            </div>
+          </DialogPanel>
+        </Dialog>
+      </header>
+      <div className="relative isolate overflow-hidden bg-gradient-to-b from-indigo-100/20 pt-14">
+        <div
+          aria-hidden="true"
+          className="absolute inset-y-0 right-1/2 -z-10 -mr-96 w-[200%] origin-top-right skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:-mr-80 lg:-mr-96"
+        />
+        <div className="mx-auto max-w-7xl px-6 py-32 sm:py-40 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0 lg:grid lg:max-w-none lg:grid-cols-2 lg:gap-x-16 lg:gap-y-8 xl:grid-cols-1 xl:grid-rows-1 xl:gap-x-8">
+            <h1 className="max-w-2xl text-balance text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl lg:col-span-2 xl:col-auto">
+            Get a Free Resume Review Live on Twitch!
+            </h1>
+            <div className="mt-6 max-w-xl lg:mt-0 xl:col-end-1 xl:row-start-1">
+              <p className="text-pretty text-lg font-medium text-gray-500 sm:text-xl/8">
+              Collaborate, ask questions, and get real-time feedback on your resume during live Twitch streams. Build a resume that gets results—completely free.
+              </p>
+              <div className="mt-10 flex items-center gap-x-6">
+                <a
+                  href="#"
+                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  Submit your resume 
+                </a>
+                <a href="#" className="text-sm/6 font-semibold text-gray-900">
+                  Learn more <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+            <img
+              alt="Lee Korelitz"
+              src="/images/lee-headshot-800x800.png"
+              className="mt-10 aspect-[6/5] w-full max-w-lg rounded-2xl object-cover sm:mt-16 lg:mt-0 lg:max-w-none xl:row-span-2 xl:row-end-2 xl:mt-36 max-w transition-transform duration-200 hover:scale-105"/>
+          </div>
+        </div>
+        <div className="absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-white sm:h-32" />
+      </div>
+      <Footer></Footer>
+    </div>
   )
 }
