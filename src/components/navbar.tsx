@@ -10,7 +10,6 @@ type NavigationItem = {
 };
 
 const navigation: NavigationItem[] = [
-  { name: 'Home', href: '/' },
   { name: 'Free Resume Review', href: '/resume-review' },
   { name: 'Resume Templates', href: '/resume-templates' },
   { name: 'Consulting Services', href: '/consulting' },
